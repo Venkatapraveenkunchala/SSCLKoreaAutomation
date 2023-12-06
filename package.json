@@ -1,0 +1,23 @@
+{
+  "name": "sscl_korea_automation_code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "Run": "npx cucumber-js --format html:Report.html",
+    "posttest": "npx js-node features/support/report.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.38.0",
+    "multiple-cucumber-html-reporter": "^3.5.0"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^9.5.1",
+    "playwright": "^1.40.0",
+    "playwright-video": "^2.4.0",
+    "xlsx": "^0.18.5"
+  }
+}
