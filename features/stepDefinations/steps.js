@@ -315,6 +315,11 @@ Then('User clicks on claims section', async function () {
 
 
 });
+Then('click on claim record and verify the fields with respect to that', async function () {
+  await browserManager.page.click('//span[contains(text(),"SSI000041")]')
+  let number = await browserManager.page.locator("#incident-number").innerText()
+  //expect(number).toContain("41")
+});
 
 
 
@@ -389,7 +394,12 @@ Then('User is able to navigate to Cancellation Dates & Reason pop up', async fun
   //span[contains(text(),"Cancel purchase intention")]
   // await browserManager.page.waitForTimeout(1000)
 });
+Then('edit existing outlet', async function () {
+  await browserManager.page.click("//span[contains(text(),'PC BD')]");
+  await browserManager.page.fill("#outlet-name", "Sample")
+  await browserManager.page.click("#save-button");
 
+});
 
 
 Then('User is able to fill the all the details and complete the validations in pop up', async function () {
@@ -405,12 +415,31 @@ Then('User is able to click on Next on Cancellation Dates & Reason pop up', asyn
 
 
 });
+Then('User is able to see the error', async function () {
+  let error = await browserManager.page.locator("//p[contains(text(),'Please enter cancellation reason')]").innerText();
+  expect(error).toContain("Please enter cancellation reason")
+  await browserManager.page.click("#my-modal-close")
+
+});
+
 
 
 
 Then('User is able to navigate to Refund pop up screen', async function () {
   let Text = await browserManager.page.locator('//P[contains(text(),"Refund")]').innerText();
   expect(Text).toBe("Refund")
+});
+Then('User is able to edit refund amount', async function () {
+  await browserManager.page.waitForTimeout(10000)
+  let refundpopUp = browserManager.page.locator("#cancel-policy-columns_layout-container")
+  await browserManager.page.click("#edit-link")
+  await browserManager.page.locator("#refund-amount").type("111")
+  await browserManager.page.waitForTimeout(10000)
+  let refund = await browserManager.page.locator("#refund-amount").innerText();
+  console.log(refund)
+  //expect(refund).toBeLessThanOrEqual(111)
+  await browserManager.page.click("#my-modal-close")
+
 });
 
 
@@ -428,6 +457,19 @@ Then('User clicks on Administration Tab', async function () {
 
 Then('User Selects outlet option from drop down', async function () {
   await browserManager.page.click('//a[contains(text(),"Outlet")]')
+
+});
+Then('click on add outlet', async function () {
+  await browserManager.page.click("#add-outlet")
+  await browserManager.page.fill("#outlet-code", "901")
+  await browserManager.page.fill("#outlet-name", "Prav")
+  await browserManager.page.click("//div[@aria-description='Outlet Type']")
+  await browserManager.page.waitForTimeout(1000)
+  let outletPopUp = browserManager.page.locator("//section[@id='add-outlet']")
+  await outletPopUp.click("#outlet-type-SVC")
+  await browserManager.page.click("#outlet-create-button")
+  await browserManager.page.waitForTimeout(1000)
+  await browserManager.page.click("#my-modal-close")
 
 });
 
@@ -610,7 +652,7 @@ Then('validate the extended warranty details displaying corresponding fields', a
   let ExValue = Value.readingExcel()
   let Outlet = await (await ExValue).OutLetCodes;
   console.log("Excel value", Outlet)
-  let Outletdisplay = await (await browserManager.page.locator("#outlet").innerText()).toString();
+  let Outletdisplay =  (await browserManager.page.locator("#outlet").innerText()).toString();
   console.log("displayed value", Outletdisplay)
   expect(Outlet).toContain(Outletdisplay)
   let VMName = await (await ExValue).VehicleModelName;
@@ -714,12 +756,12 @@ Then('user will select the existing incident', async function () {
 });
 Then('user will create claim for existing incident', async function () {
   await browserManager.page.waitForTimeout(3000)
- // await browserManager.page.fill('#wip-number', '12344')
+  // await browserManager.page.fill('#wip-number', '12344')
   //await browserManager.page.fill('#present-mileage', '12345')
   //await browserManager.page.click("//*[@name='claim-notice-day']")
   //await browserManager.page.click("//span[contains(text(),'Today')]")
   await browserManager.page.click("#report-fault-date")
- // await browserManager.page.click("//span[contains(text(),'1')]")
+  // await browserManager.page.click("//span[contains(text(),'1')]")
   await browserManager.page.click("//span[contains(text(),'Today')]")
   await browserManager.page.fill('#loss-description', 'Sample')
   await browserManager.page.fill('#total-estimated-claim-amount', '555')
@@ -729,15 +771,18 @@ Then('user will create claim for existing incident', async function () {
   await browserManager.page.click("//*[@aria-label='Accidental Damage']")
 });
 Then('user adds new car model to existing list', async function () {
-  await browserManager.page.waitForTimeout(50000)
-  let AddCarModel=browserManager.page.locator("section#add-vehicle")
-  await AddCarModel.click("//div[@aria-label='Category']")
-  await AddCarModel.click("//*[@id='category-Boxster']")
-  //id="dropdown-list-vehicle-class"
-  await AddCarModel.click("#dropdown-list-vehicle-class")
-  await AddCarModel.fill("#vehicle-model",'Parav')
-  await AddCarModel.fill("#vehicle-code",'907')
-  await AddCarModel.click("#vehicle-create-button")
+
+  await browserManager.page.click("//div[@aria-label='Category']")
+  await browserManager.page.waitForTimeout(5000)
+
+  let AddCarModel = browserManager.page.locator("section.content")
+  await AddCarModel.click("#category-Boxster")
+
+  await browserManager.page.click("//div[@aria-label='Class']")
+  await AddCarModel.click("#vehicle-class-S-Class")
+  await browserManager.page.locator('input#vehicle-model').type('Prav')
+  await browserManager.page.locator('input#vehicle-code').type('905')
+  await browserManager.page.click("#vehicle-create-button")
 
 
 });

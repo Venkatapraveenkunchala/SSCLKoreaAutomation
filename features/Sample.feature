@@ -9,6 +9,15 @@ Feature: Functionality of SSCL Korea
     Then User clicks on ADD Claim button
     Then User navigate to new claim creation page
     Given User Need to be log out
+    @DraftClaimDetails
+  Scenario: User has to see the details of created claim 
+    When User has enterd required URL
+    When User is loging into SSCL korea Application
+    Then User clicks on warranty record from warranty details page
+    Then User Will navigate to warranty details page
+    Then User clicks on claims section
+    Then click on claim record and verify the fields with respect to that
+
   @LoginScenario
   Scenario Outline: Login with different credentials
     When User has enterd required URL
@@ -53,6 +62,28 @@ Feature: Functionality of SSCL Korea
     Then User is able to navigate to Refund pop up screen
     Then User is able to view all required fields in refund pop up
     Then User clicks on log out and navigate to login page
+    @cancelWarrantyError
+  Scenario: Validating Warranty cancel functionality with error message
+    When User has enterd required URL
+    When User is loging into SSCL korea Application
+    Then User clicks on warranty record from warranty details page
+    Then User is able to cancel the warranty by clicking cancel button
+    Then User is able to click on Next on Cancellation Dates & Reason pop up
+    Then User is able to see the error
+    Then User clicks on log out and navigate to login page
+    @EditRefund
+    Scenario: Valiadting edit refund functionality
+    When User has enterd required URL
+    When User is loging into SSCL korea Application
+    Then User clicks on warranty record from warranty details page
+    Then User is able to cancel the warranty by clicking cancel button
+    Then User is able to navigate to Cancellation Dates & Reason pop up
+    Then User is able to fill the all the details and complete the validations in pop up
+    Then User is able to click on Next on Cancellation Dates & Reason pop up
+    Then User is able to navigate to Refund pop up screen
+    Then User is able to edit refund amount
+    Then User clicks on log out and navigate to login page
+
   @creatCLaimFmHeader
   Scenario: Navigating to claim creation page from Claim button in Header
     When User has enterd required URL
@@ -86,10 +117,7 @@ Feature: Functionality of SSCL Korea
     Then Click on Back to Sign in button
     Then Validate user is navigated back to login page
 
-  @Sample
-  Scenario: Few more steps
-    Then Navigate to claims page from Header Claim option
-    Then Validate the place holders in search criteria in each column
+  
   @outlet
   Scenario: Navigating to OutLet Table
     When User has enterd required URL
@@ -173,7 +201,7 @@ Feature: Functionality of SSCL Korea
     Then validate the message pop ups on leaving email field with empty value
     Then validate the message pop ups on leaving email field with invalid value
     Then validate the message pop ups on entering valid email
-    Given User Need to be log out
+    
   @searchInWarrantyEnquiry
   Scenario: Verify user is able to perform search operation on all columns in warranty enquiry
     When User has enterd required URL
@@ -214,6 +242,24 @@ Scenario: Add new car model in existing list
     Then user navigate to Car Model
     Then Click on ADD Car Model button
     Then user adds new car model to existing list
+    @Addoutlet
+  Scenario: Add new OutLet to existing  list
+    When User has enterd required URL
+    When User is loging into SSCL korea Application
+    Then User clicks on Administration Tab
+    Then User Selects outlet option from drop down
+    Then User navigate to OutLet table
+    Then click on add outlet
+    Then User clicks on log out and navigate to login page
+    @editOutlet
+    Scenario: edit existing outlet
+    When User has enterd required URL
+    When User is loging into SSCL korea Application
+    Then User clicks on Administration Tab
+    Then User Selects outlet option from drop down
+    Then User navigate to OutLet table
+    Then edit existing outlet
+    Then User clicks on log out and navigate to login page
 
 
 
